@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>批量图片哈希生成与视频查找</title>
+</head>
+<body>
+    <h1>上传图片并生成哈希码，并根据相似度查找视频</h1>
+    
+    <!-- 文件上传表单 -->
+    <form action="/" method="POST" enctype="multipart/form-data">
+        <input type="file" name="files" accept=".png, .jpg, .jpeg, .bmp" multiple required>
+        <button type="submit">上传图片</button>
+    </form>
+
+    {% if most_similar_video %}
+        <h2>最相似的视频：{{ most_similar_video_name }}</h2>
+        <video width="640" height="360" controls>
+            <source src="{{ url_for('video', filename=most_similar_video) }}" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    {% endif %}
+
+</body>
+</html>

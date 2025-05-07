@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>音频哈希生成与视频查找</title>
+</head>
+<body>
+    <h1>上传音频文件生成哈希码并查找视频</h1>
+    
+    <!-- 文件上传表单 -->
+    <form action="/" method="POST" enctype="multipart/form-data">
+        <input type="file" name="files" accept=".mp3, .wav, .flac" multiple required>
+        <button type="submit">上传音频文件</button>
+    </form>
+
+    {% if file_hashes %}
+        <h2>上传成功！以下是生成的音频哈希码：</h2>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>文件名</th>
+                    <th>哈希码</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for file in file_hashes %}
+                    <tr>
+                        <td>{{ file.filename }}</td>
+                        <td>{{ file.hash_code | join(', ') }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+
+    {% if most_similar_video %}
+        <h2>最相似的视频：{{ most_similar_video }}</h2>
+        <video width="640" height="360" controls>
+            <source src="{{ url_for('video', filename=most_similar_video) }}" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    {% endif %}
+</body>
+</html>

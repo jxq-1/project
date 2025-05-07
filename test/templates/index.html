@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>批量图片和音频哈希生成与视频查找</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        form {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        input[type="file"] {
+            margin: 20px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #5cb85c;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background-color: #4cae4c;
+        }
+
+        .video-container {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        video {
+            width: 80%;
+            max-width: 800px;
+            border-radius: 8px;
+        }
+
+        h2 {
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Upload images or audio files to retrieve the most similar videos</h1>
+        
+        <!-- 文件上传表单 -->
+        <form action="/" method="POST" enctype="multipart/form-data">
+            <input type="file" name="files" accept=".png, .jpg, .jpeg, .bmp, .mp3, .wav, .flac" multiple required>
+            <br>
+            <button type="submit">上传文件</button>
+        </form>
+
+        {% if most_similar_video %}
+            <div class="video-container">
+                <h2>The most similar video: {{ most_similar_video_name }}</h2>
+                <video controls>
+                    <source src="{{ url_for('video', filename=most_similar_video) }}" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>

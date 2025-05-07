@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>音频哈希生成</title>
+</head>
+<body>
+    <h1>上传音频文件生成哈希码</h1>
+    
+    <!-- 文件上传表单 -->
+    <form action="/" method="POST" enctype="multipart/form-data">
+        <input type="file" name="files" accept=".mp3, .wav, .flac" multiple required>
+        <button type="submit">上传音频文件</button>
+    </form>
+
+    {% if file_hashes %}
+        <h2>上传成功！以下是生成的音频哈希码：</h2>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>文件名</th>
+                    <th>哈希码</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for file in file_hashes %}
+                    <tr>
+                        <td>{{ file.filename }}</td>
+                        <td>{{ file.hash_code | join(', ') }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+</body>
+</html>
